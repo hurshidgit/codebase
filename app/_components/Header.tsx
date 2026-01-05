@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import {
 	NavigationMenu,
@@ -7,8 +9,10 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
+import { UserButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
+
 function Header() {
 	const courses = [
 		{
@@ -67,15 +71,31 @@ function Header() {
 		},
 	]
 
+	const { user, isLoaded } = useUser()
+
+	// Agar user ma'lumotlari yuklanmagan bo'lsa
+	if (!isLoaded) {
+		return (
+			<div className='p-4 max-w-7xl flex justify-between w-full'>
+				<div className='flex gap-2 items-center'>
+					<Image src={'/logo.png'} alt='logo' width={40} height={40} />
+					<h2 className='font-bold text-3xl font-game'>CodeBase</h2>
+				</div>
+				<div className='animate-pulse'>
+					<div className='h-10 w-20 bg-gray-300 rounded'></div>
+				</div>
+			</div>
+		)
+	}
+
 	return (
 		<div className='p-4 max-w-7xl flex justify-between w-full'>
 			<div className='flex gap-2 items-center'>
 				<Image src={'/logo.png'} alt='logo' width={40} height={40} />
-				<h2 className='font-bold text-3xl  font-game'>CodeBase</h2>
+				<h2 className='font-bold text-3xl font-game'>CodeBase</h2>
 			</div>
 
 			{/* Navbar */}
-
 			<NavigationMenu>
 				<NavigationMenuList className='gap-8'>
 					<NavigationMenuItem>
@@ -83,29 +103,32 @@ function Header() {
 						<NavigationMenuContent>
 							<ul className='grid md:grid-cols-2 gap-2 sm:w-[400px] md:w-[500px] lg:w-[600px]'>
 								{courses.map((course, index) => (
-									<div
-										key={index}
-										className='p-2 hover:bg-accent rounded-xl cursor-pointer'
-									>
-										<h2 className='font-medium'>{course.name}</h2>
-										<p className='text-sm text-gray-500'>{course.desc}</p>
-									</div>
+									<Link href={course.path} key={index}>
+										<div className='p-2 hover:bg-accent rounded-xl cursor-pointer'>
+											<h2 className='font-medium'>{course.name}</h2>
+											<p className='text-sm text-gray-500'>{course.desc}</p>
+										</div>
+									</Link>
 								))}
 							</ul>
 						</NavigationMenuContent>
 					</NavigationMenuItem>
+
+					{/* To'g'rilangan: NavigationMenuLink uchun asChild prop'ini qo'shish */}
 					<NavigationMenuItem>
-						<NavigationMenuLink>
+						<NavigationMenuLink asChild>
 							<Link href={'/projects'}>Projects</Link>
 						</NavigationMenuLink>
 					</NavigationMenuItem>
+
 					<NavigationMenuItem>
-						<NavigationMenuLink>
+						<NavigationMenuLink asChild>
 							<Link href={'/pricing'}>Pricing</Link>
 						</NavigationMenuLink>
 					</NavigationMenuItem>
+
 					<NavigationMenuItem>
-						<NavigationMenuLink>
+						<NavigationMenuLink asChild>
 							<Link href={'/contact-us'}>Contact Us</Link>
 						</NavigationMenuLink>
 					</NavigationMenuItem>
@@ -113,10 +136,22 @@ function Header() {
 			</NavigationMenu>
 
 			{/* Sign up Button */}
-
-			<Button className='font-game text-2xl' variant={'pixel'}>
-				Sign up
-			</Button>
+			{!user ? (
+				<Link href={'/sign-in'}>
+					<Button className='font-game text-2xl' variant={'pixel'}>
+						Sign up
+					</Button>
+				</Link>
+			) : (
+				<div className='flex gap-4 items-center'>
+					<Link href={'/dashboard'}>
+						<Button className='font-game text-2xl' variant={'pixel'}>
+							Dashboard
+						</Button>
+					</Link>
+					<UserButton />
+				</div>
+			)}
 		</div>
 	)
 }
