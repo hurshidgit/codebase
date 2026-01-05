@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Inter, Jersey_10 } from 'next/font/google'
 import './globals.css'
@@ -39,7 +40,9 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} ${GameFont.variable} ${inter.variable} antialiased`}
 			>
-				<Provider>{children}</Provider>
+				<ClerkProvider>
+					<Provider>{children}</Provider>
+				</ClerkProvider>
 			</body>
 		</html>
 	)
