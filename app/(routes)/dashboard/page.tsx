@@ -1,10 +1,10 @@
 'use client'
-import EnrolledCourses from '../_components/EnrolledCourses'
-import ExploreMore from '../_components/ExploreMore'
-import InviteFriend from '../_components/InviteFriend'
-import UpgradeToPro from '../_components/UpgradeToPro'
-import UserStatus from '../_components/UserStatus'
-import WelcomeBanner from '../_components/WelcomeBanner'
+import EnrolledCourses from './_components/EnrolledCourses'
+import ExploreMore from './_components/ExploreMore'
+import InviteFriend from './_components/InviteFriend'
+import UpgradeToPro from './_components/UpgradeToPro'
+import UserStatus from './_components/UserStatus'
+import WelcomeBanner from './_components/WelcomeBanner'
 
 function page() {
 	return (
