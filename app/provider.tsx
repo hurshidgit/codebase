@@ -5,6 +5,7 @@ import { useUser } from '@clerk/nextjs'
 import axios from 'axios'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { useEffect, useState } from 'react'
+import Header from './_components/Header'
 
 function Provider({
 	children,
@@ -39,6 +40,10 @@ function Provider({
 					setUserDetail: setUserDetail as any,
 				}}
 			>
+				{/* Header / Navbar */}
+				<div className='flex flex-col items-center'>
+					<Header />
+				</div>
 				{children}
 			</UserDetailContext.Provider>
 		</NextThemesProvider>
