@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 
 function EnrolledCourses() {
@@ -15,9 +16,11 @@ function EnrolledCourses() {
 					<h2 className='font-game text-xl'>
 						You Don&apos;t have any enrolled courses
 					</h2>
-					<Button variant={'pixel'} size={'lg'} className='font-game text-lg'>
-						Browser All Couses
-					</Button>
+					<Link href={'/courses'}>
+						<Button variant={'pixel'} size={'lg'} className='font-game text-lg'>
+							Browser All Couses
+						</Button>
+					</Link>
 				</div>
 			) : (
 				<div>List</div>
